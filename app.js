@@ -50,6 +50,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/datingmatch', require('./routes/datingMatch'));
 
 // set up port and listen
 const PORT = process.env.port || 5000;
