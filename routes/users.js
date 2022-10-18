@@ -5,8 +5,11 @@ const passport = require('passport');
 
 // load User model 
 const User = require('../models/User');
+// load datingData model
+const datingData = require('../models/DatingData');
 
 const { forwardAuthenticated } = require('../config/auth');
+const DatingData = require('../models/DatingData');
 
 // Register page
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
@@ -86,7 +89,8 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 // Login a user
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/dashboard',
+    // successRedirect: '/dashboard',
+    successRedirect: '/users/datinginfo',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
@@ -99,5 +103,46 @@ router.get('/logout', (req, res) => {
     res.redirect('/users/login');
   });
 });
+
+// update my dating info
+router.get('/updatedatinginfo', (req, res) => res.render('updatedatinginfo'));
+
+router.post('/updatedatinginfo', (req, res, next) => {
+  const { email, nickname, sex, age, location, hobbies, covidStatus } = req.body;
+  // console.log('email:'+email+' nickname:'+nickname+' covidStatus:'+covidStatus);
+  const newDatingDatum = new DatingData({
+      nickName:nickname,
+      sex:sex,
+      age:age,
+      email:email,
+      location:location,
+      hobbies:hobbies,
+      covidStatus:covidStatus
+  });
+
+  newDatingDatum.save()
+  .then(user => {
+      console.log("Your dating info was saved successfully.");
+      res.redirect('/users/datinginfo');
+  })
+  .catch(err => console.log(err));
+
+  // show my dating info after updated
+  res.render('datinginfo', {'datingDatum': newDatingDatum});
+});
+
+// show my dating info
+// router.get('/datinginfo', forwardAuthenticated, (req, res) => res.render('datinginfo'));
+router.get('/datinginfo', (req, res) => {
+  DatingData.findOne({ email:res.email }).then(datingDatum=>{
+    if(datingDatum){
+      res.render('datinginfo', {'datingDatum': datingDatum});
+    }
+    else{
+      res.redirect('/users/updatedatinginfo');
+    }
+  });
+});
+
 
 module.exports = router;

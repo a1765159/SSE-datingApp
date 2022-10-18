@@ -26,7 +26,8 @@ const { forwardAuthenticated } = require('../config/auth');
 // .catch(err => console.log(err));
 
 // List users
-router.get('/', forwardAuthenticated, (req, res) => {
+// router.get('/', forwardAuthenticated, (req, res) => {
+router.get('/', (req, res) => {
     DatingData.find().then( datingData => {
         // for (var i=0; i<datingData.length; i++){
         //     console.log("datingDatum:" datingData[i]);

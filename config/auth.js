@@ -14,5 +14,6 @@ module.exports = {
       return next();
     }
     res.redirect('/dashboard');      
+    // res.redirect('/user/datinginfo');      
   }
 };
