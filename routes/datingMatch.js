@@ -8,23 +8,32 @@ const DatingData = require('../models/DatingData');
 
 const { forwardAuthenticated } = require('../config/auth');
 
-// test showing info
- var data={
-        name: 'Jim',
-        sex: 'Male',
-        age: '18',
-        email: 'Jim@gmail.com',
-        location: 'Adelaide',
-        hobbies: 'Swimming',
-        covidStatus: 'Negative'
-    };
-// router.get('/', (req,res) => res.render('datingmatch', data));
-
-// List users
-router.get('/', forwardAuthenticated, (req, res) => res.render('datingmatch', data));
-// DatingData.find().then( user => {
-//   res.render('datingmatch');
+// test: save one document
+// const newDatingDatum = new DatingData({
+//     nickName: 'Lily',
+//     sex: 'Male',
+//     age: '18',
+//     email: 'Jim@gmail.com',
+//     location: 'Adelaide',
+//     hobbies: 'Swimming',
+//     covidStatus: 'Negative'
 // });
 
+// newDatingDatum.save()
+// .then(user => {
+//     console.log("Document was saved successfully.");
+// })
+// .catch(err => console.log(err));
+
+// List users
+router.get('/', forwardAuthenticated, (req, res) => {
+    DatingData.find().then( datingData => {
+        // for (var i=0; i<datingData.length; i++){
+        //     console.log("datingDatum:" datingData[i]);
+        //     res.render('datingmatch', datingData[i]);
+        // }
+        res.render('datingmatch', {'datingData': datingData});
+    });
+});
 
 module.exports = router;

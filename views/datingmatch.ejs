@@ -3,36 +3,38 @@
     <div class="card card-body">
       <h1 class="text-center mb-3"><i class="fa-solid fa-list-ul"></i>  Dating Match</h1>
       <%- include("./partials/messages") %>
-      <TABLE width=“400” height=“200" style="font-size:18px">
-        <TR>
-          <TD >Nickname:</TD>
-          <TD ><%= name %></TD>
-        </TR>
-        <TR>
-          <TD >Sex:</TD>
-          <TD ><%= sex %></TD>
-        </TR>
-        <TR>
-          <TD >Age:</TD>
-          <TD ><%= age %></TD>
-        </TR>
-        <TR>
-          <TD >Email:</TD>
-          <TD ><%= email %></TD>
-        </TR>
-        <TR>
-          <TD  >Hobbies:</TD>
-          <TD  ><%= hobbies %></TD>
-        </TR>
-        <TR>
-          <TD >Location:</TD>
-          <TD ><%= location %></TD>
-        </TR>
-        <TR>
-          <TD >Covid Status:</TD>
-          <TD ><%= covidStatus %></TD>
-        </TR>
-    </TABLE>
+        <% datingData.forEach(function(datingDatum){%>
+        <table width=“400” height=“200" style="font-size:18px; border-bottom:1px solid gainsboro">
+          <tr>
+            <td >Nickname:</td>
+            <td ><%= datingDatum.nickName %></td>
+          </tr>
+          <tr>
+            <td >Sex:</td>
+            <td ><%= datingDatum.sex %></td>
+          </tr>
+          <tr>
+            <td >Age:</td>
+            <td ><%= datingDatum.age %></td>
+          </tr>
+          <tr>
+            <td >Email:</td>
+            <td ><%= datingDatum.email %></td>
+          </tr>
+          <tr>
+            <td  >Hobbies:</td>
+            <td  ><%= datingDatum.hobbies %></td>
+          </tr>
+          <tr>
+            <td >Location:</td>
+            <td ><%= datingDatum.location %></td>
+          </tr>
+          <tr>
+            <td >Covid Status:</td>
+            <td ><%= datingDatum.covidStatus %></td>
+          </tr>
+          </table>
+        <%})%>
     </div>
   </div>
 </div>
