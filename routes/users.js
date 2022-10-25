@@ -89,8 +89,8 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 // Login a user
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    // successRedirect: '/dashboard',
-    successRedirect: '/users/datinginfo',
+    successRedirect: '/dashboard',
+    // successRedirect: '/users/datinginfo',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
@@ -108,9 +108,20 @@ router.get('/logout', (req, res) => {
 router.get('/updatedatinginfo', (req, res) => res.render('updatedatinginfo'));
 
 router.post('/updatedatinginfo', (req, res, next) => {
+  var curUserEmail = req.body.email;
+  if(req.user){
+    curUserEmail = req.user.email;
+  }
+  else{
+    console.log("Haven't logged in.");
+    res.redirect('/users/login');
+    return;
+  }
+
   const { email, nickname, sex, age, location, hobbies, covidStatus } = req.body;
   // console.log('email:'+email+' nickname:'+nickname+' covidStatus:'+covidStatus);
-  const newDatingDatum = new DatingData({
+  // const newDatingDatum = new DatingData({ // avoid modify the immutable field '_id'
+  const newDatingDatum = {
       nickName:nickname,
       sex:sex,
       age:age,
@@ -118,23 +129,46 @@ router.post('/updatedatinginfo', (req, res, next) => {
       location:location,
       hobbies:hobbies,
       covidStatus:covidStatus
-  });
+  };
 
-  newDatingDatum.save()
-  .then(user => {
-      console.log("Your dating info was saved successfully.");
-      res.redirect('/users/datinginfo');
-  })
-  .catch(err => console.log(err));
+  if(curUserEmail == newDatingDatum.email){
+    DatingData.updateOne({email:curUserEmail},  
+      newDatingDatum, {upsert:true})
+    .then(user => {
+        console.log("Your dating info was updated successfully.");
+    })
+    .catch(err => console.log(err));
 
-  // show my dating info after updated
-  res.render('datinginfo', {'datingDatum': newDatingDatum});
+    // show my dating info after updated
+    res.render('datinginfo', {'datingDatum': newDatingDatum});
+  }
+  else{
+    console.log("Can only change your own dating info.");
+  }
+
+  // console.log("==Your dating info was saved successfully.");
+  // newDatingDatum.save()
+  // .then(user => {
+  //     console.log("Your dating info was saved successfully.");
+  //     res.redirect('/users/datinginfo');
+  // })
+  // .catch(err => console.log(err));
 });
 
 // show my dating info
 // router.get('/datinginfo', forwardAuthenticated, (req, res) => res.render('datinginfo'));
 router.get('/datinginfo', (req, res) => {
-  DatingData.findOne({ email:res.email }).then(datingDatum=>{
+  var curUserEmail = req.body.email;
+  if(req.user){
+    curUserEmail = req.user.email;
+  }
+  else{
+    console.log("Haven't logged in.");
+    res.redirect('/users/login');
+    return;
+  }
+
+  DatingData.findOne({ email:curUserEmail }).then(datingDatum=>{
     if(datingDatum){
       res.render('datinginfo', {'datingDatum': datingDatum});
     }

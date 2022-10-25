@@ -35,5 +35,5 @@ const DatingDataSchema = new mongoose.Schema({
   }
 });
 
-const DatingData= mongoose.model('DatingDate', DatingDataSchema);
+const DatingData= mongoose.model('DatingData', DatingDataSchema);
 module.exports = DatingData;
