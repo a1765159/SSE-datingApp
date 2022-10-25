@@ -105,7 +105,7 @@ router.get('/logout', (req, res) => {
 });
 
 // update my dating info
-router.get('/updatedatinginfo', (req, res) => res.render('updatedatinginfo'));
+router.get('/updatedatinginfo', (req, res) => res.render('updatedatinginfo', {'curUserEmail':req.user.email}));
 
 router.post('/updatedatinginfo', (req, res, next) => {
   var curUserEmail = req.body.email;
@@ -120,7 +120,7 @@ router.post('/updatedatinginfo', (req, res, next) => {
 
   const { email, nickname, sex, age, location, hobbies, covidStatus } = req.body;
   // console.log('email:'+email+' nickname:'+nickname+' covidStatus:'+covidStatus);
-  var availability = null;
+  var availability = "Yes";
   if(covidStatus == "Positive"){
     availability = "No";
   }
