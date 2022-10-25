@@ -29,6 +29,10 @@ const DatingDataSchema = new mongoose.Schema({
   hobbies: {
     type: String
   },
+  availability: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now

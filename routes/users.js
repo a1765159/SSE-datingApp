@@ -120,6 +120,11 @@ router.post('/updatedatinginfo', (req, res, next) => {
 
   const { email, nickname, sex, age, location, hobbies, covidStatus } = req.body;
   // console.log('email:'+email+' nickname:'+nickname+' covidStatus:'+covidStatus);
+  var availability = null;
+  if(covidStatus == "Positive"){
+    availability = "No";
+  }
+
   // const newDatingDatum = new DatingData({ // avoid modify the immutable field '_id'
   const newDatingDatum = {
       nickName:nickname,
@@ -128,7 +133,8 @@ router.post('/updatedatinginfo', (req, res, next) => {
       email:email,
       location:location,
       hobbies:hobbies,
-      covidStatus:covidStatus
+      covidStatus:covidStatus,
+      availability:availability
   };
 
   if(curUserEmail == newDatingDatum.email){

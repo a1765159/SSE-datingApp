@@ -37,4 +37,11 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+    const date = req.body;
+    // TODO: 1. check the day availability for the user, 2. change the button to be non-clickable
+    res.redirect("/datingmatch");
+});
+
+
 module.exports = router;

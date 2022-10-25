@@ -3,6 +3,7 @@
     <div class="card card-body">
       <h1 class="text-center mb-3"><i class="fa-solid fa-list-ul"></i>  Dating Match</h1>
       <%- include("./partials/messages") %>
+      <!-- Todo: show dating info as a calender for each one, highlight the day that has been occupied -->
         <% datingData.forEach(function(datingDatum){%>
         <table width=“400” height=“200" style="font-size:18px; border-bottom:1px solid gainsboro">
           <tr>
@@ -33,7 +34,25 @@
             <td >Covid Status:</td>
             <td ><%= datingDatum.covidStatus %></td>
           </tr>
+          <tr>
+            <td >Availability:</tr>
+            <td ><%= datingDatum.availability %></td>
+          </tr>
           </table>
+          <!-- TODO: if not available, the button should be non-clickable -->
+          <form action="/datingmatch" method="POST">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                class="form-control"
+                placeholder="Date"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Date</button>
+          </form>
         <%})%>
     </div>
   </div>
