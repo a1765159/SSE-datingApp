@@ -130,27 +130,22 @@ router.post('/updatedatinginfo', (req, res, next) => {
       nickName:nickname,
       sex:sex,
       age:age,
-      email:email,
+      email:curUserEmail,
       location:location,
       hobbies:hobbies,
       covidStatus:covidStatus,
       availability:availability
   };
 
-  if(curUserEmail == newDatingDatum.email){
-    DatingData.updateOne({email:curUserEmail},  
-      newDatingDatum, {upsert:true})
-    .then(user => {
-        console.log("Your dating info was updated successfully.");
-    })
-    .catch(err => console.log(err));
+  DatingData.updateOne({email:curUserEmail},  
+    newDatingDatum, {upsert:true})
+  .then(user => {
+      console.log("Your dating info was updated successfully.");
+  })
+  .catch(err => console.log(err));
 
-    // show my dating info after updated
-    res.render('datinginfo', {'datingDatum': newDatingDatum});
-  }
-  else{
-    console.log("Can only change your own dating info.");
-  }
+  // show my dating info after updated
+  res.render('datinginfo', {'datingDatum': newDatingDatum});
 
   // console.log("==Your dating info was saved successfully.");
   // newDatingDatum.save()

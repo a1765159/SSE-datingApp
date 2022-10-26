@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const formidable = require('formidable');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -36,6 +39,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// formidable upload
+app.use(express.static('public'))
+
 // connect flash
 app.use(flash());
 
@@ -52,6 +58,21 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/datingmatch', require('./routes/datingMatch'));
 
+// app.get('/upload', (req, res) => res.render('upload'))
+app.post('/upload', (req, res) => {
+  const form = new formidable.IncomingForm()
+  const filePath = path.join(__dirname, 'public', 'images')
+  form.uploadDir = filePath
+  form.parse(req, async (err, fields, files) => {
+    if (err) res.send("Error parsing the files")
+    const file = files.upload
+    const fileName = file.originalFilename
+    fs.renameSync(file.filepath, path.join(filePath, fileName))
+    // res.redirect("/users/updatedatinginfo")
+    return;
+  })
+})
+
 // set up port and listen
-const PORT = process.env.port || 5000;
+const PORT = process.env.port || 5001;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

@@ -3,15 +3,22 @@
     <div class="card card-body">
       <h1 class="text-center mb-3"><i class="fa-solid fa-list-ul"></i>  Update My Dating Info</h1>
       <%- include("./partials/messages") %>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input class="form-control" type="file" name="upload" required style="display:block">
+            <button class="btn btn-primary">Portrait</button>
+        </div>
+      </form>
       <form action="/users/updatedatinginfo" method="POST">
         <div class="form-group">
           <label for="email">Email</label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             class="form-control"
             placeholder="<%= curUserEmail %>"
+            disabled
           />
           <!-- TODO: verify email to be the user's email -->
         </div>
@@ -71,6 +78,16 @@
             <option value="3">Positive</option>
           </select>
         </div>
+        <!-- <div class="form-group">
+          <label for="picture">Picture</label>
+          <input
+            type="file"
+            id="picture"
+            name="picture"
+            class="form-control"
+            placeholder="Enter Hobbies"
+          />
+        </div> -->
         <button type="submit" class="btn btn-primary btn-block">Submit</button>
       </form>
     </div>
