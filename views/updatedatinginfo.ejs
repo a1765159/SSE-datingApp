@@ -2,6 +2,7 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mb-3"><i class="fa-solid fa-list-ul"></i>  Update My Dating Info</h1>
+      <a href="/dashboard" class="btn btn-secondary">Back</a>
       <%- include("./partials/messages") %>
       <form action="/upload" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -17,7 +18,7 @@
             id="email"
             name="email"
             class="form-control"
-            placeholder="<%= curUserEmail %>"
+            placeholder="<%= email %>"
             disabled
           />
           <!-- TODO: verify email to be the user's email -->
@@ -30,14 +31,15 @@
             name="nickname"
             class="form-control"
             placeholder="Enter Nickname"
+            value="<%= typeof nickname != 'undefined' ? nickname : '' %>"
           />
         </div>
         <div class="form-group">
           <label for="sex">Sex</label><br>
-          <select id="sex" class="form-control" >
-            <option value="1">--</option>
-            <option value="2">Male</option>
-            <option value="3">Female</option>
+          <select id="sex" class="form-control" name="sex" >
+            <option value="" disabled selected hidden>--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
         </div>
         <div class="form-group">
@@ -48,16 +50,18 @@
             name="age"
             class="form-control"
             placeholder="Enter Age"
+            value="<%= typeof age != 'undefined' ? age : '' %>"
           />
         </div>
         <div class="form-group">
-          <label for="text">Location</label>
+          <label for="location">Location</label>
           <input
             type="location"
             id="location"
             name="location"
             class="form-control"
             placeholder="Enter Location"
+            value="<%= typeof location != 'undefined' ? location : '' %>"
           />
         </div>
         <div class="form-group">
@@ -68,14 +72,15 @@
             name="hobbies"
             class="form-control"
             placeholder="Enter Hobbies"
+            value="<%= typeof hobbies != 'undefined' ? hobbies : '' %>"
           />
         </div>
         <div class="form-group">
           <label for="covidStatus">Covid Status</label><br>
-          <select id="covidStatus" class="form-control" >
-            <option value="1">--</option>
-            <option value="2">Negative</option>
-            <option value="3">Positive</option>
+          <select id="covidStatus" class="form-control" name="covidStatus" >
+            <option value="" disabled selected hidden>--</option>
+            <option value="Negative">Negative</option>
+            <option value="Positive">Positive</option>
           </select>
         </div>
         <!-- <div class="form-group">
