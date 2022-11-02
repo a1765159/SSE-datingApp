@@ -7,8 +7,14 @@ const passport = require('passport');
 const formidable = require('formidable');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
+const https = require('https');
 
 const app = express();
+
+var privateKey = fs.readFileSync('./config/https/private.pem', 'utf8');
+var certificate = fs.readFileSync('./config/https/file.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 
 // passport configuration
 require('./config/passport')(passport);
@@ -74,5 +80,17 @@ app.post('/upload', (req, res) => {
 })
 
 // set up port and listen
-const PORT = process.env.port || 5001;
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+// const PORT = process.env.port || 5001;
+// app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+var PORT = 18080;
+var SSLPORT = 18081;
+
+httpServer.listen(PORT, function() {
+  console.log('HTTP Server is running on: http://localhost:%s', PORT);
+});
+httpsServer.listen(SSLPORT, function() {
+  console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
+});
