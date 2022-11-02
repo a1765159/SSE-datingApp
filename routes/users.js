@@ -90,6 +90,7 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/dashboard',
+    //TODO: Notify users to update their dating info, if they haven't done that before.
     // successRedirect: '/users/datinginfo',
     failureRedirect: '/users/login',
     failureFlash: true
@@ -136,10 +137,10 @@ router.post('/updatedatinginfo', ensureAuthenticated, (req, res) => {
       age,
       location,
       hobbies,
-      covidStatus
+      covidStatus,
+      availability
     });
   } else {
-
     // const newDatingDatum = new DatingData({ // avoid modify the immutable field '_id'
     const newDatingDatum = {
         nickName:nickname,
@@ -161,14 +162,6 @@ router.post('/updatedatinginfo', ensureAuthenticated, (req, res) => {
 
     // show my dating info after updated
     res.render('datinginfo', { 'datingDatum': newDatingDatum, 'email': req.user.email });
-
-    // console.log("==Your dating info was saved successfully.");
-    // newDatingDatum.save()
-    // .then(user => {
-    //     console.log("Your dating info was saved successfully.");
-    //     res.redirect('/users/datinginfo');
-    // })
-    // .catch(err => console.log(err));
   }
 });
 

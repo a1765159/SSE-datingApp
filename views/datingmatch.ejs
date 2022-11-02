@@ -6,7 +6,7 @@
       <%- include("./partials/messages") %>
       <!-- Todo: show dating info as a calender for each one, highlight the day that has been occupied -->
         <% datingData.forEach(function(datingDatum){%>
-        <table width=“400” height=“200" style="font-size:18px; border-bottom:1px solid gainsboro">
+        <table width=“400” height=“200" style="font-size:18px;">
           <tr>
             <td >Nickname:</td>
             <td ><%= datingDatum.nickName %></td>
@@ -36,14 +36,14 @@
             <td ><%= datingDatum.covidStatus %></td>
           </tr>
           <tr>
-            <td >Availability:</tr>
+            <td >Availability:</td>
             <td ><%= datingDatum.availability %></td>
           </tr>
           </table>
           <!-- TODO: if not available, the button should be non-clickable -->
           <form action="/datingmatch" method="POST">
             <div class="form-group">
-              <label for="date">Date</label>
+              <label for="date" style="font-size:18px">Dating Day:</label>
               <input
                 type="date"
                 id="date"
