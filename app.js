@@ -59,6 +59,18 @@ app.use((req, res, next) => {
   next();
 });
 
+// rate limiting
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000,   // 15 minute window
+	max: 100,                   // max number of requests per window for each IP address
+	standardHeaders: true,
+	legacyHeaders: false
+});
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
+
 // routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
