@@ -6,6 +6,7 @@ const passport = require('passport');
 // load models 
 const User = require('../models/User');
 const DatingData = require('../models/DatingData');
+const xss = require("xss");
 
 // load authorization functions
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
@@ -112,12 +113,18 @@ router.get('/updatedatinginfo', ensureAuthenticated, (req, res) => {
 
 // Update info
 router.post('/updatedatinginfo', ensureAuthenticated, (req, res) => {
-  const { nickname, sex, age, location, hobbies, covidStatus } = req.body;
+  var { nickname, sex, age, location, hobbies, covidStatus } = req.body;
   let errors = [];
 
   if (!nickname || !sex || !age || !location || !hobbies || !covidStatus) {
     errors.push({ msg: 'Please fill in all fields' });
   }
+
+  // XSS prevention
+  nickname = xss(nickname);
+  age = xss(age);
+  location = xss(location);
+  hobbies = xss(hobbies);
 
   // console.log('email:'+email+' nickname:'+nickname+' covidStatus:'+covidStatus);
   var availability = "Yes";
