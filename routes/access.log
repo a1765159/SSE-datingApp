@@ -1,0 +1,7 @@
+::1 - - [05/Nov/2022:04:57:06 +0000] "GET / HTTP/1.1" 200 13 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:57:14 +0000] "GET / HTTP/1.1" 200 2507 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:57:22 +0000] "GET /users/login HTTP/1.1" 200 3360 "https://localhost:18081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:57:32 +0000] "POST /users/login HTTP/1.1" 302 64 "https://localhost:18081/users/login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:57:32 +0000] "GET /dashboard HTTP/1.1" 200 2827 "https://localhost:18081/users/login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:58:10 +0000] "GET /users/logout HTTP/1.1" 302 68 "https://localhost:18081/dashboard" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+::1 - - [05/Nov/2022:04:58:10 +0000] "GET /users/login HTTP/1.1" 200 3360 "https://localhost:18081/dashboard" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"

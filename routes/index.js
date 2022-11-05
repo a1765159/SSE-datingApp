@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-// Log model
-const Log = require('../models/Log');
-const DatingData = require("../models/DatingData");
+var fs = require('fs')
+var morgan = require('morgan');
+var path = require('path')
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+// setup the logger
+router.use(morgan('combined', { stream: accessLogStream }))
 
 // Welcome page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -16,11 +22,6 @@ router.get('/dashboard', ensureAuthenticated,  (req, res) =>
   })
 );
 
-router.get('/', (req, res) => {
-    Log.find().then( log => {
-        res.render('dashboard', {'log': Log});
-    });
-});
 router.post('/', (req, res) => {
     const date = req.body;
     res.redirect("/dashboard");
