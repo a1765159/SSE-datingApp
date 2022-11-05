@@ -1,9 +1,0 @@
-::1 - - [05/Nov/2022:06:03:28 +0000] "GET / HTTP/1.1" 304 - - 8.904 ms
-::1 - - [05/Nov/2022:06:04:04 +0000] "GET /users/login HTTP/1.1" 200 3360 - 15.785 ms
-::1 - - [05/Nov/2022:06:04:17 +0000] "POST /users/login HTTP/1.1" 302 64 - 110.053 ms
-::1 - - [05/Nov/2022:06:04:17 +0000] "GET /dashboard HTTP/1.1" 304 - - 1.427 ms
-::1 - - [05/Nov/2022:06:04:51 +0000] "GET /users/datinginfo HTTP/1.1" 302 90 - 37.856 ms
-::1 - - [05/Nov/2022:06:04:51 +0000] "GET /users/updatedatinginfo HTTP/1.1" 200 5346 - 5.646 ms
-::1 - - [05/Nov/2022:06:05:29 +0000] "GET /dashboard HTTP/1.1" 304 - - 6.227 ms
-::1 - - [05/Nov/2022:06:05:30 +0000] "GET /datingmatch HTTP/1.1" 200 7008 - 49.779 ms
-::1 - - [05/Nov/2022:06:06:06 +0000] "GET /dashboard HTTP/1.1" 304 - - 3.404 ms
