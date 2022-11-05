@@ -9,8 +9,18 @@ var path = require('path')
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
+morgan.token('host', function(req, res) {
+    return req.hostname;
+});
+
+morgan.token('ip', function(req, res) {
+    return req.ip;
+});
+
 // setup the logger
-router.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms', { stream: accessLogStream }))
+router.use(morgan('Date-[:date[clf]], User :host, IP :ip, Method-:method, url-:url, version-HTT' +
+    'P/:http-version, status-:status , contentLength-:res[content-length] responseTime-:response-time ms',
+    { stream: accessLogStream }))
 
 // Welcome page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -21,10 +31,5 @@ router.get('/dashboard', ensureAuthenticated,  (req, res) =>
     name: req.user.name
   })
 );
-
-router.post('/', (req, res) => {
-    const date = req.body;
-    res.redirect("/dashboard");
-});
 
 module.exports = router;
