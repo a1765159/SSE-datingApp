@@ -1,0 +1,6 @@
+Date-[05/Nov/2022:13:02:44 +0000], User localhost, IP ::ffff:127.0.0.1, email N/A Method-GET, url-/dashboard, version-HTTP/1.1, status-302 , contentLength-68 responseTime-2.347 ms
+Date-[05/Nov/2022:13:02:44 +0000], User localhost, IP ::ffff:127.0.0.1, email N/A Method-GET, url-/users/login, version-HTTP/1.1, status-200 , contentLength-3627 responseTime-6.095 ms
+Date-[05/Nov/2022:13:02:45 +0000], User localhost, IP ::ffff:127.0.0.1, email test2@email.com Method-POST, url-/users/login, version-HTTP/1.1, status-302 , contentLength-64 responseTime-101.505 ms
+Date-[05/Nov/2022:13:02:45 +0000], User localhost, IP ::ffff:127.0.0.1, email test2@email.com Method-GET, url-/dashboard, version-HTTP/1.1, status-200 , contentLength-2589 responseTime-1.086 ms
+Date-[05/Nov/2022:13:02:47 +0000], User localhost, IP ::ffff:127.0.0.1, email N/A Method-GET, url-/users/logout, version-HTTP/1.1, status-302 , contentLength-68 responseTime-0.708 ms
+Date-[05/Nov/2022:13:02:47 +0000], User localhost, IP ::ffff:127.0.0.1, email N/A Method-GET, url-/users/login, version-HTTP/1.1, status-200 , contentLength-3360 responseTime-1.376 ms

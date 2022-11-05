@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -74,11 +75,34 @@ app.use(limiter);
 // redirect any http traffic to https
 app.use((req, res, next) => {
   if ( !req.secure ) {
-    console.log(req.headers.host);
     return res.redirect('https://localhost:18081' + req.url);
   }
   return next();
 });
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+morgan.token('email', function(req, res) {
+  if (req.user) {
+    return req.user.email;
+  }
+  // user is not logged in
+  return "N/A";
+});
+
+morgan.token('host', function(req, res) {
+    return req.hostname;
+});
+
+morgan.token('ip', function(req, res) {
+    return req.ip;
+});
+
+// setup the logger
+app.use(morgan('Date-[:date[clf]], User :host, IP :ip, email :email Method-:method, url-:url, version-HTT' +
+    'P/:http-version, status-:status , contentLength-:res[content-length] responseTime-:response-time ms',
+    { stream: accessLogStream }))
 
 // routes
 app.use('/', require('./routes/index'));
