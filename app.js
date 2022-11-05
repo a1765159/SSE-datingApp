@@ -71,6 +71,15 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 
+// redirect any http traffic to https
+app.use((req, res, next) => {
+  if ( !req.secure ) {
+    console.log(req.headers.host);
+    return res.redirect('https://localhost:18081' + req.url);
+  }
+  return next();
+});
+
 // routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
