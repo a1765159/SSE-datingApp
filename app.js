@@ -10,6 +10,8 @@ const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const morgan = require('morgan');
+const helmet=require("helmet");
+const cors=require("cors");
 
 const app = express();
 
@@ -35,11 +37,57 @@ app.set('view engine', 'ejs');
 // Body parser (for req.body)
 app.use(express.urlencoded({ extended: false }));
 
+// 1) prevent clickjacking attacks
+app.use(
+  helmet.frameguard({
+    action: "deny",
+  })
+ ); 
+// 2) This header can be used to detect that the application is powered by Express, which lets hackers conduct a precise attack. so make it disable
+ app.use(helmet.hidePoweredBy());
+//  app.disable('x-powered-by') //alternate way to disable it
+
+// 3) it puts another layer of security while fetching any data on your API
+app.use(helmet.xssFilter());
+// 4) use cors policy for security purpose if you ever make client server approch it will be helpfull too
+app.use(cors({
+  methods:['GET','POST'],
+  // origin:'http://localhost:18080' // set this if you used client server approch or api system
+  // credentials:true //this must set to be true if you fetch or recieve cookies
+}))
+// 5) This tells the browser to prefer HTTPS over HTTP. By default, this figure is 15552000 or 180 days.
+// app.use(
+//   helmet.hsts({
+//     maxAge: 123456,
+//     includeSubDomains: false,
+//   })
+//  );
+// 6) This helps control DNS prefetching and improves user privacy. let it should be false for privacy
+app.use(
+  helmet.dnsPrefetchControl({ 
+    allow: false,
+  })
+ );
+//  7) if you dont want any third party script or api such as (bootstrap) run in your code. by making it false will allow third party script run in your code there is plenty of options for allowing specific uri and api or third party script to run.
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: true,
+//   })
+// );
+
 // Express session
 app.use(session({
   secret: 'secret',
   resave: true,
-  saveUninitalized: true
+  saveUninitalized: true,
+  // sameSite:'', // This can be set to 'strict', 'lax', 'none', or true (which maps to 'strict')
+  cookie: {
+    secure: true,
+    // httpOnly: true,
+    // domain: 'example.com',
+    // path: '',
+    // expires: expiredate
+  } //If secure is set, and you access your site over HTTP, the cookie will not be set. If you have your node.js behind a proxy and are using secure: true, you need to set “trust proxy” in express:
 }));
 
 // passport middleware
